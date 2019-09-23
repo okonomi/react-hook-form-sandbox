@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
+
+import EntryForm from './EntryForm';
+
+export const EntryContext = createContext([
+  {
+    lastName: '',
+    firstName: ''
+  },
+  () => {},
+  () => {}
+]);
 
 const App = () => {
   const [formValues, setFormValues] = useState({
-    lastName: '',
-    firstName: ''
+    lastName: 'aaa',
+    firstName: 'bbb'
   });
 
   const handleChange = e => {
@@ -20,19 +31,9 @@ const App = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Last Name: <input type="text" name="lastName" onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          First Name: <input type="text" name="firstName" onChange={handleChange} />
-        </label>
-        <br />
-        <input type="submit" />
-      </form>
-    </div>
+    <EntryContext.Provider value={[formValues, handleChange, handleSubmit]}>
+      <EntryForm />
+    </EntryContext.Provider>
   );
 }
 
